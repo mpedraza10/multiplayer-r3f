@@ -20,6 +20,10 @@ export const Experience = () => {
 			<ambientLight intensity={0.3} />
 			<ContactShadows blur={2} />
 			<OrbitControls />
+			<mesh rotation-x={-Math.PI / 2} position-y={-0.001}>
+				<planeGeometry args={[10, 10]} />
+				<meshStandardMaterial color="#f0f0f0" />
+			</mesh>
 			{characters.map((character) => (
 				<HoodieCharacter
 					key={character.id}
