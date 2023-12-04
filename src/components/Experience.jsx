@@ -12,6 +12,9 @@ import {
 // Jotai imports
 import { useAtom } from "jotai";
 
+// Three improts
+import * as THREE from "three";
+
 // Components
 import { HoodieCharacter } from "./HoodieCharacter";
 
@@ -43,7 +46,13 @@ export const Experience = () => {
 			{characters.map((character) => (
 				<HoodieCharacter
 					key={character.id}
-					position={character.position}
+					position={
+						new THREE.Vector3(
+							character.position[0],
+							character.position[1],
+							character.position[2]
+						)
+					}
 					hairColor={character.hairColor}
 					topColor={character.topColor}
 					bottomColor={character.bottomColor}
