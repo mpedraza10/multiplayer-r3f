@@ -7,7 +7,7 @@ Command: npx gltfjsx@6.2.15 public/models/hoodieCharacter.glb -o src/components/
 import { useEffect, useMemo, useRef, useState } from "react";
 
 // React three fiber imports
-import { useGraph } from "@react-three/fiber";
+import { useFrame, useGraph } from "@react-three/fiber";
 
 // Drei imports
 import { useGLTF, useAnimations } from "@react-three/drei";
@@ -15,12 +15,19 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 // Three stdlib imports
 import { SkeletonUtils } from "three-stdlib";
 
+// Constant
+const MOVEMENT_SPEED = 0.032;
+
 export function HoodieCharacter({
 	hairColor = "green",
 	topColor = "pink",
 	bottomColor = "brown",
 	...props
 }) {
+	// Position
+	const position = useMemo(() => props.position, []);
+
+	// Group model reference
 	const group = useRef();
 
 	// Get everything from glb file
@@ -42,14 +49,38 @@ export function HoodieCharacter({
 
 	// Effect to change animations
 	useEffect(() => {
-		actions[animation].reset().fadeIn(0.5).play();
+		actions[animation].reset().fadeIn(0.32).play();
 
 		// Cleanup (unmount)
-		return () => actions[animation]?.fadeOut(0.5);
+		return () => actions[animation]?.fadeOut(0.32);
 	}, [animation]);
 
+	// Frame to add logic to moving to another position
+	useFrame(() => {
+		if (group.current.position.distanceTo(props.position) > 0.1) {
+			// Create the direction vector by subtratcting the new position to the current position
+			const direction = group.current.position
+				.clone()
+				.sub(props.position)
+				.normalize()
+				.multiplyScalar(MOVEMENT_SPEED);
+
+			// Now subtract the direction of the current position to get to the new position
+			group.current.position.sub(direction);
+
+			// Make the model look at the new position that is moving to
+			group.current.lookAt(props.position);
+
+			// Animate the moving to walk or run
+			setAnimation("CharacterArmature|Run");
+		} else {
+			// Animate the moving to idle
+			setAnimation("CharacterArmature|Idle");
+		}
+	});
+
 	return (
-		<group ref={group} {...props} dispose={null}>
+		<group ref={group} {...props} position={position} dispose={null}>
 			<group name="Root_Scene">
 				<group name="RootNode">
 					<group
