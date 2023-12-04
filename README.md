@@ -1,10 +1,4 @@
-# r3f-vite-starter
-A boilerplate to build R3F projects
+# Multiplayer mini game using React three fiber
+This is a practice project following Wawa Sensei's tutorial: https://www.youtube.com/watch?v=uLv1Zu8GyUw&ab_channel=WawaSensei and adapting it to my preferences in order to practice with React Three Fiber
 
-```
-yarn
-yarn dev
-```
-
-
-![image](https://user-images.githubusercontent.com/6551176/221732091-23ee52cb-4150-42fa-b998-43628d7a6b0d.png)
+Here we can see how to connect a react application using the React Three Fiber library and Socket.io to create the multiplayer real-time experience!
