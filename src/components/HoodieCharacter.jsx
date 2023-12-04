@@ -34,11 +34,18 @@ export function HoodieCharacter({
 	// useGraph creates two flat object collections for nodes and materials
 	const { nodes } = useGraph(clone);
 
+	// Actions or animations from model
 	const { actions } = useAnimations(animations, group);
+
+	// Animation state
 	const [animation, setAnimation] = useState("CharacterArmature|Idle");
 
+	// Effect to change animations
 	useEffect(() => {
 		actions[animation].reset().fadeIn(0.5).play();
+
+		// Cleanup (unmount)
+		return () => actions[animation]?.fadeOut(0.5);
 	}, [animation]);
 
 	return (
