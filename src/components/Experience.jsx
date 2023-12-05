@@ -45,6 +45,7 @@ export const Experience = () => {
 			</mesh>
 			{characters.map((character) => (
 				<HoodieCharacter
+					id={character.id}
 					key={character.id}
 					position={
 						new THREE.Vector3(
