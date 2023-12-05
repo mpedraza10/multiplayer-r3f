@@ -1,4 +1,8 @@
+// React three fiber imports
 import { Canvas } from "@react-three/fiber";
+
+// Components
+import { UI } from "./components/UI/UI";
 import { Experience } from "./components/Experience";
 import SocketManager from "./components/SocketManager";
 
@@ -10,6 +14,7 @@ function App() {
 				<color attach="background" args={["#ececec"]} />
 				<Experience />
 			</Canvas>
+			<UI />
 		</>
 	);
 }
